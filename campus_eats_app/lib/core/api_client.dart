@@ -15,7 +15,7 @@ class ApiException implements Exception {
 
 /// Central HTTP client. Automatically attaches JWT Bearer token to every request.
 class ApiClient {
-  static const _storage = FlutterSecureStorage();
+  static final _storage = FlutterSecureStorage();
 
   static Future<String?> _getToken() => _storage.read(key: 'jwt_token');
 

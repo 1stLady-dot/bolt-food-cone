@@ -38,12 +38,25 @@ def create_menu_item():
             os.makedirs(os.path.dirname(save_path), exist_ok=True)
             file.save(save_path)
 
+    try:
+        price = float(price)
+    except (TypeError, ValueError):
+        return jsonify({'error': 'Invalid price value'}), 400
+
+    try:
+        stock = int(stock)
+    except (TypeError, ValueError):
+        return jsonify({'error': 'Invalid stock value'}), 400
+
+    if stock < 0:
+        return jsonify({'error': 'Stock must be zero or positive'}), 400
+
     item = MenuItem(
         name=name,
         description=request.form.get('description'),
-        price=float(price),
+        price=price,
         category=category,
-        stock=int(stock),
+        stock=stock,
         image_filename=image_filename,
     )
     db.session.add(item)
@@ -57,10 +70,27 @@ def create_menu_item():
 @admin_required
 def update_menu_item(item_id):
     item = MenuItem.query.get_or_404(item_id)
-    data = request.get_json()
+    data = request.get_json() or {}
     for field in ['name', 'description', 'price', 'category', 'stock', 'is_available']:
         if field in data:
-            setattr(item, field, data[field])
+            if field == 'price':
+                try:
+                    item.price = float(data[field])
+                except (TypeError, ValueError):
+                    return jsonify({'error': 'Invalid price value'}), 400
+            elif field == 'stock':
+                try:
+                    item.stock = int(data[field])
+                except (TypeError, ValueError):
+                    return jsonify({'error': 'Invalid stock value'}), 400
+            elif field == 'is_available':
+                value = data[field]
+                if isinstance(value, bool):
+                    item.is_available = value
+                else:
+                    item.is_available = str(value).lower() in ('1', 'true', 'yes', 'y')
+            else:
+                setattr(item, field, data[field])
     db.session.commit()
     base_url = request.host_url.rstrip('/')
     return jsonify(item.to_dict(base_url)), 200

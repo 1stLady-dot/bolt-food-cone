@@ -66,6 +66,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(height: AppSpacing.xxl),
                   TextFormField(
                     controller: _nameCtrl,
+                    style: const TextStyle(color: AppColors.textPrimary),
+                    cursorColor: AppColors.primary,
                     decoration: const InputDecoration(
                       hintText: 'Full name',
                       prefixIcon: Icon(Icons.person_outline,
@@ -78,6 +80,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(height: AppSpacing.md),
                   TextFormField(
                     controller: _emailCtrl,
+                    style: const TextStyle(color: AppColors.textPrimary),
+                    cursorColor: AppColors.primary,
                     decoration: const InputDecoration(
                       hintText: 'Email address',
                       prefixIcon: Icon(Icons.mail_outline,
@@ -96,6 +100,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(height: AppSpacing.md),
                   TextFormField(
                     controller: _phoneCtrl,
+                    style: const TextStyle(color: AppColors.textPrimary),
+                    cursorColor: AppColors.primary,
                     decoration: const InputDecoration(
                       hintText: 'Phone (optional)',
                       prefixIcon: Icon(Icons.phone_outlined,
@@ -106,6 +112,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const SizedBox(height: AppSpacing.md),
                   TextFormField(
                     controller: _passwordCtrl,
+                    style: const TextStyle(color: AppColors.textPrimary),
+                    cursorColor: AppColors.primary,
                     obscureText: _obscure,
                     decoration: InputDecoration(
                       hintText: 'Password (min 6 chars)',

@@ -21,7 +21,7 @@ def place_order():
     }
     """
     user_id = int(get_jwt_identity())
-    data = request.get_json()
+    data = request.get_json() or {}
 
     cart_items = data.get('items', [])
     if not cart_items:

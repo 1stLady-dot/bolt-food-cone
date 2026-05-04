@@ -32,6 +32,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
             children: [
               TextFormField(
                 controller: _nameCtrl,
+                style: const TextStyle(color: Colors.black),
+                cursorColor: Colors.orange,
                 decoration: const InputDecoration(
                     labelText: 'Full Name', border: OutlineInputBorder()),
                 validator: (v) => v!.isEmpty ? 'Required' : null,
@@ -39,6 +41,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _emailCtrl,
+                style: const TextStyle(color: Colors.black),
+                cursorColor: Colors.orange,
                 decoration: const InputDecoration(
                     labelText: 'Email', border: OutlineInputBorder()),
                 keyboardType: TextInputType.emailAddress,
@@ -47,6 +51,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _phoneCtrl,
+                style: const TextStyle(color: Colors.black),
+                cursorColor: Colors.orange,
                 decoration: const InputDecoration(
                     labelText: 'Phone (optional)', border: OutlineInputBorder()),
                 keyboardType: TextInputType.phone,
@@ -54,6 +60,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _passwordCtrl,
+                style: const TextStyle(color: Colors.black),
+                cursorColor: Colors.orange,
                 decoration: const InputDecoration(
                     labelText: 'Password', border: OutlineInputBorder()),
                 obscureText: true,
@@ -71,6 +79,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ? null
                     : () async {
                         if (!_formKey.currentState!.validate()) return;
+                        final navigator = Navigator.of(context);
                         await vm.register(
                           name: _nameCtrl.text.trim(),
                           email: _emailCtrl.text.trim(),
@@ -79,9 +88,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ? null
                               : _phoneCtrl.text.trim(),
                         );
-                        if (vm.isAuthenticated && mounted) {
-                          Navigator.pushAndRemoveUntil(
-                            context,
+                        if (!mounted) return;
+                        if (vm.isAuthenticated) {
+                          navigator.pushAndRemoveUntil(
                             MaterialPageRoute(
                                 builder: (_) => const HomeScreen()),
                             (_) => false,

@@ -35,7 +35,7 @@ class _AdminScreenState extends State<AdminScreen> {
       final data = await ApiClient.get('/api/admin/orders');
       final list = data is List ? data : (data as Map)['orders'] as List? ?? data as List;
       setState(() {
-        _orders = (list as List)
+        _orders = list
             .map((e) => OrderModel.fromJson(e as Map<String, dynamic>))
             .toList();
       });
